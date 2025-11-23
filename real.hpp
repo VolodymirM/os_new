@@ -7,8 +7,17 @@
 
 class Real {
 private:
-    Word SF;
+    char SP[4];
+    char PC[4];
+    bool SF[6];
+    Word PTR;
+    bool MODE;
+    bool PI;
+    unsigned SI;
+    bool TI;
     Memory* memory;
+
+    void initRegisters();
 
 public:
     Real();

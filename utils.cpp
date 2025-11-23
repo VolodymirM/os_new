@@ -82,12 +82,18 @@ void Word::setNumberAsWord(int64_t number) {
 
 int64_t Word::getWordAsNumber() {return Converter::wordAsNumber(letters);}
 
-Block::Block() {
-    for (size_t index = 0; index < BLOCK_SIZE; ++index) {
+std::string Word::getWordAsHex(){
+    return Converter::numToHex(getWordAsNumber());
+}
+
+Block::Block(int index) {
+    cells[0] = new Word(index);
+    for (size_t index = 1; index <= BLOCK_SIZE; ++index)
         cells[index] = new Word();
-    }
 }
 
 Word& Block::getWord(size_t index) {
+    if (cells.find(index) == cells.end())
+        throw std::out_of_range("Invalid index in Block::getWord");
     return *cells[index];
 }

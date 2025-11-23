@@ -27,6 +27,7 @@ public:
     char getLetter(int index);
     void setNumberAsWord(int64_t number);
     int64_t getWordAsNumber();
+    std::string getWordAsHex();
 };
 
 class Block {
@@ -34,7 +35,7 @@ private:
     std::unordered_map<size_t, Word*> cells;
 
 public:
-    Block();
+    Block(int index);
     Word& getWord(size_t index);
 
 };

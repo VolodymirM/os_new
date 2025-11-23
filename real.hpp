@@ -7,6 +7,7 @@
 
 class Real {
 private:
+    Word SF;
     Memory* memory;
 
 public:

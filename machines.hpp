@@ -25,7 +25,7 @@ public:
 
 };
 
-class Real : public VirtualMachine {
+class RealMachine : public VirtualMachine {
 private:
     unsigned SP; // 4 bytes
     unsigned PC;
@@ -39,7 +39,7 @@ private:
     void initRegisters() override;
 
 public:
-    Real();
+    RealMachine();
     void printRegisters() override;
     void printSupervisorMemory();
     void printSupervisorMemory(const int64_t address);

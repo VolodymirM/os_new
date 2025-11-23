@@ -1,11 +1,11 @@
-#include "real.hpp"
+#include "machines.hpp"
 
 VirtualMachine::VirtualMachine() {
     initRegisters();
     memory = new VirtualMemory();
 }
 
-Real::Real() {
+RealMachine::RealMachine() {
     initRegisters();
     memory = new RealMemory();
 }
@@ -27,7 +27,7 @@ void VirtualMachine::initRegisters() {
         SF[i] = 0;
 }
 
-void Real::initRegisters() {
+void RealMachine::initRegisters() {
     SP = 0;
     PC = 0;
 
@@ -41,7 +41,7 @@ void Real::initRegisters() {
     TI = 0;
 }
 
-void Real::printRegisters() {
+void RealMachine::printRegisters() {
     std::cout << "SP: " << SP;
     std::cout << " PC: " << PC;
     std::cout << " SF: ";
@@ -57,6 +57,6 @@ void Real::printRegisters() {
 void VirtualMachine::printUserMemory() { memory->printUserMemory(); }
 void VirtualMachine::printUserMemory(const int64_t address) { memory->printUserMemory(address); }
 void VirtualMachine::printUserMemory(const std::string addressHex) { memory->printUserMemory(addressHex); }
-void Real::printSupervisorMemory() { memory->printSupervisorMemory(); }
-void Real::printSupervisorMemory(const int64_t address) { memory->printSupervisorMemory(address); }
-void Real::printSupervisorMemory(const std::string addressHex) { memory->printSupervisorMemory(addressHex); }
+void RealMachine::printSupervisorMemory() { memory->printSupervisorMemory(); }
+void RealMachine::printSupervisorMemory(const int64_t address) { memory->printSupervisorMemory(address); }
+void RealMachine::printSupervisorMemory(const std::string addressHex) { memory->printSupervisorMemory(addressHex); }

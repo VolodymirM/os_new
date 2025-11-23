@@ -1,11 +1,11 @@
 #include "constansandincludes.hpp"
-#include "real.hpp"
+#include "machines.hpp"
 #include "utils.hpp"
 
 using namespace std;
 
 int main() {
-    Real realMachine;
+    RealMachine realMachine;
     realMachine.printRegisters();
     realMachine.printUserMemory("ff");
 

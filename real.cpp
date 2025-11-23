@@ -2,7 +2,7 @@
 
 Real::Real() {
     initRegisters();
-    memory = new Memory();
+    memory = new RealMemory();
 }
 
 void Real::initRegisters() {
@@ -21,3 +21,10 @@ void Real::initRegisters() {
     SI = 0;
     TI = 0;
 }
+
+void Real::printUserMemory() { memory->printUserMemory(); }
+void Real::printUserMemory(const int64_t address) { memory->printUserMemory(address); }
+void Real::printUserMemory(const std::string addressHex) { memory->printUserMemory(addressHex); }
+void Real::printSupervisorMemory() { memory->printSupervisorMemory(); }
+void Real::printSupervisorMemory(const int64_t address) { memory->printSupervisorMemory(address); }
+void Real::printSupervisorMemory(const std::string addressHex) { memory->printSupervisorMemory(addressHex); }

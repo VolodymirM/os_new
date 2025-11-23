@@ -8,6 +8,7 @@
 #include <bits/stdc++.h>
 #include <unordered_map>
 #include <stdexcept>
+#include <algorithm>
 
 #define WORD_LENGTH 6
 #define BLOCK_SIZE 256

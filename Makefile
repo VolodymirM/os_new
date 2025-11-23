@@ -4,7 +4,7 @@ CXXFLAGS ?= -O2 -std=c++17
 
 # Project
 TARGET := main
-SRCS   := main.cpp utils.cpp real.cpp realcomponents.cpp #commands.cpp coderunner.cpp
+SRCS   := main.cpp utils.cpp real.cpp memory.cpp #commands.cpp coderunner.cpp
 OBJS   := $(SRCS:.cpp=.o)
 
 # --- OS-specific bits ---------------------------------------------------------
@@ -35,10 +35,10 @@ main.o:     main.cpp real.hpp utils.hpp#commands.hpp utils.hpp
 utils.o:    utils.cpp utils.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-real.o:     real.cpp real.hpp constansandincludes.hpp utils.hpp realcomponents.hpp
+real.o:     real.cpp real.hpp constansandincludes.hpp utils.hpp memory.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-realcomponents.o: realcomponents.cpp realcomponents.hpp constansandincludes.hpp utils.hpp
+memory.o: memory.cpp memory.hpp constansandincludes.hpp utils.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # commands.o: commands.cpp commands.hpp utils.hpp

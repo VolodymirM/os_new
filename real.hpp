@@ -3,7 +3,7 @@
 
 #include "constansandincludes.hpp"
 #include "utils.hpp"
-#include "realcomponents.hpp"
+#include "memory.hpp"
 
 class Real {
 private:
@@ -15,12 +15,18 @@ private:
     bool PI;
     unsigned SI;
     bool TI;
-    Memory* memory;
+    RealMemory* memory;
 
     void initRegisters();
 
 public:
     Real();
+    void printUserMemory();
+    void printUserMemory(const int64_t address);
+    void printUserMemory(const std::string addressHex);
+    void printSupervisorMemory();
+    void printSupervisorMemory(const int64_t address);
+    void printSupervisorMemory(const std::string addressHex);
 
 };
 

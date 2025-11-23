@@ -1,0 +1,2 @@
+# Enforce LF line endings for Makefile to avoid CRLF issues on Linux
+Makefile text eol=lf

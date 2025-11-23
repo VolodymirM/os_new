@@ -1,0 +1,6 @@
+.data
+DB "Hello!$"
+
+.code
+PR0000
+HALT

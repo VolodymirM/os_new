@@ -40,4 +40,9 @@ public:
 
 };
 
+struct Pointer {
+    Word block;
+    size_t wordIndex;
+};
+
 #endif

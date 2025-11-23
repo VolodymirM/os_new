@@ -5,9 +5,17 @@ VirtualMachine::VirtualMachine() {
     memory = new VirtualMemory();
 }
 
-RealMachine::RealMachine() {
+ChannelDevice::ChannelDevice(RealMemory* memory) : memory(memory) {}
+
+void ChannelDevice::makeOperation() {
+    // TODO: implement channel device operations
+}
+
+RealMachine::RealMachine()
+    : memory(new RealMemory()),
+    channelsDevice(memory),
+    pagingMechanism() {
     initRegisters();
-    memory = new RealMemory();
 }
 
 void VirtualMachine::printRegisters() {

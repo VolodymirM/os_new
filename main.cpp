@@ -5,12 +5,13 @@
 using namespace std;
 
 int main() {
-    RealMachine realMachine;
-    realMachine.printRegisters();
-    realMachine.printUserMemory("ff");
-
-    VirtualMachine virtualMachine;
-    virtualMachine.printRegisters();
-    virtualMachine.printUserMemory("ff");
+    RealMachine rm;
+    rm.printRegisters();
     return 0;
+}
+
+void printMenu() {
+    cout << "1. Run program\n";
+    cout << "2. Run program (step by step)\n";
+    cout << "3. Exit\n";
 }

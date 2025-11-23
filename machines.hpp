@@ -5,6 +5,7 @@
 #include "utils.hpp"
 #include "memory.hpp"
 
+// Virtual Machine
 class VirtualMachine {
 private:
     unsigned short SP; // 2 bytes
@@ -25,8 +26,40 @@ public:
 
 };
 
+// Real Machine and its components
+class ChannelDevice {
+private:
+    Word SB; // source block
+    Word DB; // destination block
+    unsigned ST; // source type
+    unsigned DT; // destination type
+    size_t offset;
+    unsigned count;
+
+    RealMemory* memory;
+public:
+    ChannelDevice(RealMemory* memory) : memory(memory) {};
+    void setSB(const Word& sb) { SB = sb; }
+    void setDB(const Word& db) { DB = db; }
+    void setST(unsigned st) { ST = st; }
+    void setDT(unsigned dt) { DT = dt; }
+    void setOffset(size_t off) { offset = off; }
+    void setCount(unsigned cnt) { count = cnt; }
+    void makeOperation();
+
+};
+
+class PagingMechanism { // TODO: implement
+private:
+
+public:
+    PagingMechanism() {}
+
+};
+
 class RealMachine : public VirtualMachine {
 private:
+    // Registers
     unsigned SP; // 4 bytes
     unsigned PC;
     Word PTR;
@@ -34,8 +67,12 @@ private:
     bool PI;
     unsigned SI;
     bool TI;
-    RealMemory* memory;
 
+    // Other components
+    RealMemory* memory;
+    ChannelDevice channelsDevice;
+    PagingMechanism pagingMechanism;
+    
     void initRegisters() override;
 
 public:

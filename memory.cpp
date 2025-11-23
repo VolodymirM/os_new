@@ -1,6 +1,6 @@
 #include "memory.hpp"
 
-bool Memory::isWordEmpty(Word* word) {
+bool VirtualMemory::isWordEmpty(Word* word) {
     const char* letters = word->getWord();
     for (int i = 0; i < WORD_LENGTH; ++i) {
         if (letters[i] != '\0')  // NULL character here (in our documentation it is '-' - change if needed)
@@ -9,7 +9,7 @@ bool Memory::isWordEmpty(Word* word) {
     return true;
 }
 
-Memory::Memory() {
+VirtualMemory::VirtualMemory() {
     for (int64_t index = 0; index < USER_MEMORY_SIZE; ++index)
             user_memory[converter.numToHex(index)] = new Block(index);
 }
@@ -23,10 +23,9 @@ RealMemory::RealMemory() {
     }
 }
 
-void Memory::printUserMemory() {
-    std::cout << "User Memory Contents:\n";
+void VirtualMemory::printUserMemory() {
     for (int64_t index = 0; index < USER_MEMORY_SIZE; ++index) {
-        std::cout << converter.numToHex(index) << " ";
+        std::cout << converter.numToHex(index) << ":";
         for (size_t i = 0; i < BLOCK_SIZE; ++i) {
             Block& block = *user_memory[converter.numToHex(index)];
             Word& word = block.getWord(i);
@@ -39,12 +38,12 @@ void Memory::printUserMemory() {
     }
 }
 
-void Memory::printUserMemory(const int64_t address) {
+void VirtualMemory::printUserMemory(const int64_t address) {
     if (address < 0 || address >= USER_MEMORY_SIZE) {
         std::cout << "Invalid address in printUserMemory(int64_t)\n";
         return;
     }
-    std::cout << converter.numToHex(address) << ":\n";
+    std::cout << converter.numToHex(address) << ":";
     Block& block = *user_memory[converter.numToHex(address)];
     for (size_t i = 0; i < BLOCK_SIZE; ++i) {
         Word& word = block.getWord(i);
@@ -56,7 +55,7 @@ void Memory::printUserMemory(const int64_t address) {
     std::cout << "\n";
 }
 
-void Memory::printUserMemory(const std::string addressHex) {
+void VirtualMemory::printUserMemory(const std::string addressHex) {
     std::string trimmedAddress = addressHex;
     trimmedAddress.erase(0, trimmedAddress.find_first_not_of('0'));
     std::transform(trimmedAddress.begin(), trimmedAddress.end(), trimmedAddress.begin(), ::tolower);
@@ -64,7 +63,7 @@ void Memory::printUserMemory(const std::string addressHex) {
         std::cout << "Invalid address in printUserMemory(string)\n";
         return;
     }
-    std::cout << trimmedAddress << ":\n";
+    std::cout << trimmedAddress << ":";
     Block& block = *user_memory[trimmedAddress];
     for (size_t i = 0; i < BLOCK_SIZE; ++i) {
         Word& word = block.getWord(i);
@@ -113,19 +112,19 @@ void RealMemory::printSupervisorMemory(const std::string addressHex) {
         std::cout << "------\n";
 }
 
-Block& Memory::getBlock(const std::string address) {
+Block& VirtualMemory::getBlock(const std::string address) {
     if (address.empty() || user_memory.find(address) == user_memory.end())
         throw std::out_of_range("Invalid address in getBlock(string)");
     return *user_memory[address];
 }
 
-Block& Memory::getBlock(const int index) {
+Block& VirtualMemory::getBlock(const int index) {
     if (index < 0 || index >= USER_MEMORY_SIZE)
         throw std::out_of_range("Invalid index in getBlock(int)");
     return *user_memory[converter.numToHex(index)];
 }
 
-Word& Memory::getWord(const std::string address, size_t index) {
+Word& VirtualMemory::getWord(const std::string address, size_t index) {
     if (address.empty() || user_memory.find(address) == user_memory.end())
         throw std::out_of_range("Invalid address in getWord(string, size_t)");
     if (index > BLOCK_SIZE || index < 0)
@@ -133,7 +132,7 @@ Word& Memory::getWord(const std::string address, size_t index) {
     return user_memory[address]->getWord(index);
 }
 
-void Memory::setWord(const std::string address, size_t index, Word* word) {
+void VirtualMemory::setWord(const std::string address, size_t index, Word* word) {
     if (address.empty() || user_memory.find(address) == user_memory.end())
         throw std::out_of_range("Invalid address in setWord(string, size_t, Word*)");
     if (index > BLOCK_SIZE || index < 0)
@@ -141,7 +140,7 @@ void Memory::setWord(const std::string address, size_t index, Word* word) {
     user_memory[address]->getWord(index) = *word;
 }
 
-Word& Memory::getWord(const int index, size_t wordIndex) {
+Word& VirtualMemory::getWord(const int index, size_t wordIndex) {
     if (index < 0 || index >= USER_MEMORY_SIZE)
         throw std::out_of_range("Invalid index in getWord(int, size_t)");
     if (wordIndex > BLOCK_SIZE || wordIndex < 0)
@@ -149,7 +148,7 @@ Word& Memory::getWord(const int index, size_t wordIndex) {
     return user_memory[converter.numToHex(index)]->getWord(wordIndex);
 }
 
-void Memory::setWord(const int index, size_t wordIndex, Word* word) {
+void VirtualMemory::setWord(const int index, size_t wordIndex, Word* word) {
     if (index < 0 || index >= USER_MEMORY_SIZE)
         throw std::out_of_range("Invalid index in setWord(int, size_t, Word*)");
     if (wordIndex > BLOCK_SIZE || wordIndex < 0)

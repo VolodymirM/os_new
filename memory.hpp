@@ -4,13 +4,13 @@
 #include "constansandincludes.hpp"
 #include "utils.hpp"
 
-class Memory {
+class VirtualMemory {
 protected:
     std::unordered_map<std::string, Block*> user_memory;
 
     bool isWordEmpty(Word* word);
 public:
-    Memory();
+    VirtualMemory();
     void printUserMemory();
     void printUserMemory(const int64_t address);
     void printUserMemory(const std::string addressHex);
@@ -23,7 +23,7 @@ public:
     
 };
 
-class RealMemory : public Memory {
+class RealMemory : public VirtualMemory {
 private:
     std::unordered_map<std::string, Word*> supervisor_memory;
 

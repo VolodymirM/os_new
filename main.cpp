@@ -6,7 +6,11 @@ using namespace std;
 
 int main() {
     Real realMachine;
-    realMachine.printUserMemory(21);
-    realMachine.printSupervisorMemory("1ff");
+    realMachine.printRegisters();
+    realMachine.printUserMemory("ff");
+
+    VirtualMachine virtualMachine;
+    virtualMachine.printRegisters();
+    virtualMachine.printUserMemory("ff");
     return 0;
 }

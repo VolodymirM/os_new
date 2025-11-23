@@ -29,4 +29,14 @@ public:
     int64_t getWordAsNumber();
 };
 
+class Block {
+private:
+    std::unordered_map<size_t, Word*> cells;
+
+public:
+    Block();
+    Word& getWord(size_t index);
+
+};
+
 #endif

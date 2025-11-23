@@ -5,18 +5,13 @@
 using namespace std;
 
 int main() {
-    cout << "Word testing" << endl;
-    Word* word1 = new Word("hello!");
+    Memory memory;
+    memory.setWord(0, 0, new Word("Hello!"));
+    cout << "Word at address 0, index 0 as number: " << memory.getWord(0, 0).getWordAsNumber() << endl;
+    cout << "Word at address 0, index 0 as hex: " << memory.getWord(0, 0).getWord() << endl;
 
-    cout << "Word1: " << word1->getWord() << endl;
-    cout << "Word1 as number: " << word1->getWordAsNumber() << "\n" << endl;
-
-    word1->setNumberAsWord(114784820031265);
-    cout << word1->getWord() << endl;
-    cout << word1->getWordAsNumber() << endl;
-
-    cout << "\nConverter testing" << endl;
-    cout << "Hex: " << Converter::hexToNum("1a") << endl;
-    cout << Converter::numToHex(26) << endl;
+    memory.setSupervisorWord(256, new Word(79600447942433));
+    cout << "Supervisor word at address 256 as number: " << memory.getSupervisorWord(256).getWordAsNumber() << endl;
+    cout << "Supervisor word at address 256 as hex: " << memory.getSupervisorWord(256).getWord() << endl;
     return 0;
 }

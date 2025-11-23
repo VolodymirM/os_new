@@ -81,3 +81,13 @@ void Word::setNumberAsWord(int64_t number) {
 }
 
 int64_t Word::getWordAsNumber() {return Converter::wordAsNumber(letters);}
+
+Block::Block() {
+    for (size_t index = 0; index < BLOCK_SIZE; ++index) {
+        cells[index] = new Word();
+    }
+}
+
+Word& Block::getWord(size_t index) {
+    return *cells[index];
+}

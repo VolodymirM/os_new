@@ -5,8 +5,6 @@ VirtualMachine::VirtualMachine() {
     memory = new VirtualMemory();
 }
 
-ChannelDevice::ChannelDevice(RealMemory* memory) : memory(memory) {}
-
 void ChannelDevice::makeOperation() {
     // TODO: implement channel device operations
 }

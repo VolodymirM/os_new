@@ -125,6 +125,42 @@ Block& VirtualMemory::getBlock(const int index) {
 }
 
 Word& VirtualMemory::getWord(const std::string address, size_t index) {
+    ++index;
+    if (address.empty() || user_memory.find(address) == user_memory.end())
+        throw std::out_of_range("Invalid address in getWord(string, size_t)");
+    if (index > BLOCK_SIZE || index < 1)
+        throw std::out_of_range("Invalid index in getWord(string, size_t)");
+    return user_memory[address]->getWord(index);
+}
+
+void VirtualMemory::setWord(const std::string address, size_t index, Word* word) {
+    ++index;
+    if (address.empty() || user_memory.find(address) == user_memory.end())
+        throw std::out_of_range("Invalid address in setWord(string, size_t, Word*)");
+    if (index > BLOCK_SIZE || index < 1)
+        throw std::out_of_range("Invalid index in setWord(string, size_t, Word*)");
+    user_memory[address]->getWord(index) = *word;
+}
+
+Word& VirtualMemory::getWord(const int index, size_t wordIndex) {
+    ++wordIndex;
+    if (index < 0 || index >= USER_MEMORY_SIZE)
+        throw std::out_of_range("Invalid index in getWord(int, size_t)");
+    if (wordIndex > BLOCK_SIZE || wordIndex < 1)
+        throw std::out_of_range("Invalid wordIndex in getWord(int, size_t)");
+    return user_memory[converter.numToHex(index)]->getWord(wordIndex);
+}
+
+void VirtualMemory::setWord(const int index, size_t wordIndex, Word* word) {
+    ++wordIndex;
+    if (index < 0 || index >= USER_MEMORY_SIZE)
+        throw std::out_of_range("Invalid index in setWord(int, size_t, Word*)");
+    if (wordIndex > BLOCK_SIZE || wordIndex < 1)
+        throw std::out_of_range("Invalid wordIndex in setWord(int, size_t, Word*)");
+    user_memory[converter.numToHex(index)]->getWord(wordIndex) = *word;
+}
+
+Word& RealMemory::getWord(const std::string address, size_t index) {
     if (address.empty() || user_memory.find(address) == user_memory.end())
         throw std::out_of_range("Invalid address in getWord(string, size_t)");
     if (index > BLOCK_SIZE || index < 0)
@@ -132,7 +168,7 @@ Word& VirtualMemory::getWord(const std::string address, size_t index) {
     return user_memory[address]->getWord(index);
 }
 
-void VirtualMemory::setWord(const std::string address, size_t index, Word* word) {
+void RealMemory::setWord(const std::string address, size_t index, Word* word) {
     if (address.empty() || user_memory.find(address) == user_memory.end())
         throw std::out_of_range("Invalid address in setWord(string, size_t, Word*)");
     if (index > BLOCK_SIZE || index < 0)
@@ -140,7 +176,7 @@ void VirtualMemory::setWord(const std::string address, size_t index, Word* word)
     user_memory[address]->getWord(index) = *word;
 }
 
-Word& VirtualMemory::getWord(const int index, size_t wordIndex) {
+Word& RealMemory::getWord(const int index, size_t wordIndex) {
     if (index < 0 || index >= USER_MEMORY_SIZE)
         throw std::out_of_range("Invalid index in getWord(int, size_t)");
     if (wordIndex > BLOCK_SIZE || wordIndex < 0)
@@ -148,7 +184,7 @@ Word& VirtualMemory::getWord(const int index, size_t wordIndex) {
     return user_memory[converter.numToHex(index)]->getWord(wordIndex);
 }
 
-void VirtualMemory::setWord(const int index, size_t wordIndex, Word* word) {
+void RealMemory::setWord(const int index, size_t wordIndex, Word* word) {
     if (index < 0 || index >= USER_MEMORY_SIZE)
         throw std::out_of_range("Invalid index in setWord(int, size_t, Word*)");
     if (wordIndex > BLOCK_SIZE || wordIndex < 0)

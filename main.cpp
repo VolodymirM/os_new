@@ -7,6 +7,19 @@ using namespace std;
 int main() {
     RealMachine rm;
     rm.printRegisters();
+    rm.setWord("ff", 0, new Word("Hello!"));
+    rm.printUserMemory("ff");
+
+    cout << "\n";
+    rm.setSupervisorWord("100", new Word("World!"));
+    rm.printSupervisorMemory("100");
+
+    cout << "-------------------\n";
+
+    VirtualMachine vm;
+    vm.printRegisters();
+    vm.setWord("ff", 0, new Word("Hello!"));
+    vm.printUserMemory("ff");
     return 0;
 }
 

@@ -23,6 +23,10 @@ public:
     void printUserMemory();
     void printUserMemory(const int64_t address);
     void printUserMemory(const std::string addressHex);
+    Word& getWord(const std::string address, size_t index) { return memory->getWord(address, index); }
+    void setWord(const std::string address, size_t index, Word* word) { memory->setWord(address, index, word); }
+    Word& getWord(const int index, size_t wordIndex) { return memory->getWord(index, wordIndex); }
+    void setWord(const int index, size_t wordIndex, Word* word) { memory->setWord(index, wordIndex, word); }
 
 };
 
@@ -81,6 +85,10 @@ public:
     void printSupervisorMemory();
     void printSupervisorMemory(const int64_t address);
     void printSupervisorMemory(const std::string addressHex);
+    Word& getSupervisorWord(const std::string address) { return memory->getSupervisorWord(address); }
+    void setSupervisorWord(const std::string address, Word* word) { memory->setSupervisorWord(address, word); }
+    Word& getSupervisorWord(const int index) { return memory->getSupervisorWord(index); }
+    void setSupervisorWord(const int index, Word* word) { memory->setSupervisorWord(index, word); }
 
 };
 

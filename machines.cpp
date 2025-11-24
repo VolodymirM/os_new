@@ -11,8 +11,8 @@ void ChannelDevice::makeOperation() {
 
 RealMachine::RealMachine()
     : memory(new RealMemory()),
-    channelsDevice(memory),
-    pagingMechanism() {
+    channelsDevice(this),
+    pagingMechanism(this) {
     initRegisters();
 }
 
@@ -66,3 +66,10 @@ void VirtualMachine::printUserMemory(const std::string addressHex) { memory->pri
 void RealMachine::printSupervisorMemory() { memory->printSupervisorMemory(); }
 void RealMachine::printSupervisorMemory(const int64_t address) { memory->printSupervisorMemory(address); }
 void RealMachine::printSupervisorMemory(const std::string addressHex) { memory->printSupervisorMemory(addressHex); }
+
+VirtualMachine* RealMachine::getConnectedVM(const std::string vmName) {
+    if (connectedVMs.find(vmName) != connectedVMs.end())
+        return connectedVMs[vmName];
+    else
+        return nullptr;
+}

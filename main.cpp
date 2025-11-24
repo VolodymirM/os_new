@@ -1,5 +1,6 @@
 #include "constansandincludes.hpp"
-#include "machines.hpp"
+#include "real.hpp"
+#include "virtual.hpp"
 #include "utils.hpp"
 
 using namespace std;

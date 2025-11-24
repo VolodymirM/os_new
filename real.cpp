@@ -9,6 +9,7 @@ RealMachine::RealMachine()
     channelsDevice(this),
     pagingMechanism(this) {
     initRegisters();
+    createSwappingFile();
 }
 
 void RealMachine::initRegisters() {
@@ -23,6 +24,25 @@ void RealMachine::initRegisters() {
     PI = 0;
     SI = 0;
     TI = 0;
+}
+
+void RealMachine::createSwappingFile() {
+    std::ofstream swapFile;
+    swapFile.open(SWAP_FILE);
+    if (!swapFile.is_open()) {
+        std::cerr << "Error creating swapping file.\n";
+        return;
+    }
+
+    for (int i = 0; i < SWAP_BLOCKS; ++i) {
+        swapFile << converter.numToHex(i) << " ";
+        for (int j = 0; j < BLOCK_SIZE; ++j)
+            swapFile << "------ ";
+        if (i != SWAP_BLOCKS - 1)
+            swapFile << "\n";
+    }
+
+    swapFile.close();
 }
 
 void RealMachine::printRegisters() {

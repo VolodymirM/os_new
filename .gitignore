@@ -4,5 +4,8 @@
 # Ignore all .o files
 *.o
 
+# Ignore swap file
+swap.txt
+
 # Ignore .vscode folder
 .vscode/

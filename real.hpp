@@ -65,9 +65,11 @@ private:
     std::unordered_map<std::string, VirtualMachine* > connectedVMs;
     
     void initRegisters() override;
+    void createSwappingFile();
 
 public:
     RealMachine();
+    void makeOperation(); // TODO: implement
     void printRegisters() override; // Register methods
     void setSP(unsigned sp) { SP = sp; }
     unsigned getSP() const { return SP; }

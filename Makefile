@@ -58,3 +58,4 @@ run: $(TARGET)$(EXE)
 clean:
 	-$(RM) $(TARGET)$(EXE)
 	-$(RM) $(OBJS)
+	-$(RM) swap.txt

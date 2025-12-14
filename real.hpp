@@ -47,11 +47,12 @@ public:
 
 };
 
-class RealMachine : public VirtualMachine {
+class RealMachine { // TODO: CPU struct
 private:
     // Registers
-    unsigned SP; // 4 bytes
+    bool SF[6]; // 6 flags
     unsigned PC;
+    unsigned SP; // 4 bytes
     Word PTR;
     bool MODE; // 0 - user mode, 1 - supervisor mode
     bool PI;
@@ -59,18 +60,17 @@ private:
     bool TI;
 
     // Other components
-    RealMemory* memory;
+    Memory memory; 
     ChannelDevice channelsDevice;
     PagingMechanism pagingMechanism;
-    std::unordered_map<std::string, VirtualMachine* > connectedVMs;
     
-    void initRegisters() override;
+    void initRegisters();
     void createSwappingFile();
 
-public:
+public: // TODO: print channel device registers
     RealMachine();
     void makeOperation(); // TODO: implement
-    void printRegisters() override; // Register methods
+    void printRegisters(); // Register methods
     void setSP(unsigned sp) { SP = sp; }
     unsigned getSP() const { return SP; }
     void setPC(unsigned pc) { PC = pc; }
@@ -85,16 +85,10 @@ public:
     unsigned getSI() const { return SI; }
     void setTI(bool ti) { TI = ti; }
     bool getTI() const { return TI; }
-    void printSupervisorMemory(); // Memory methods
-    void printSupervisorMemory(const int64_t address);
-    void printSupervisorMemory(const std::string addressHex);
-    Word& getSupervisorWord(const std::string address) { return memory->getSupervisorWord(address); }
-    void setSupervisorWord(const std::string address, Word* word) { memory->setSupervisorWord(address, word); }
-    Word& getSupervisorWord(const int index) { return memory->getSupervisorWord(index); }
-    void setSupervisorWord(const int index, Word* word) { memory->setSupervisorWord(index, word); }
-    void connectVM(const std::string vmName, VirtualMachine* vm) { connectedVMs[vmName] = vm; } // VM methods
-    void disconnectVM(const std::string vmName) { connectedVMs.erase(vmName); }
-    VirtualMachine* getConnectedVM(const std::string vmName);
+    void setSF(size_t index, bool value) { SF[index] = value; }
+    bool getSF(size_t index) const { return SF[index]; }
+    void setWord(const size_t blockIndex, const size_t wordIndex, Word* word) { memory.setWord(blockIndex, wordIndex, word); }
+    void printMemoryBlock(const size_t block) { memory.printBlock(block); }
 
 };
 

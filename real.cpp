@@ -5,11 +5,11 @@ void ChannelDevice::makeOperation() {
 }
 
 RealMachine::RealMachine()
-    : memory(new RealMemory()),
-    channelsDevice(this),
+    : channelsDevice(this),
     pagingMechanism(this) {
     initRegisters();
     createSwappingFile();
+    this->memory = Memory();
 }
 
 void RealMachine::initRegisters() {
@@ -56,15 +56,4 @@ void RealMachine::printRegisters() {
     std::cout << " PI: " << PI;
     std::cout << " SI: " << SI;
     std::cout << " TI: " << TI << "\n";
-}
-
-void RealMachine::printSupervisorMemory() { memory->printSupervisorMemory(); }
-void RealMachine::printSupervisorMemory(const int64_t address) { memory->printSupervisorMemory(address); }
-void RealMachine::printSupervisorMemory(const std::string addressHex) { memory->printSupervisorMemory(addressHex); }
-
-VirtualMachine* RealMachine::getConnectedVM(const std::string vmName) {
-    if (connectedVMs.find(vmName) != connectedVMs.end())
-        return connectedVMs[vmName];
-    else
-        return nullptr;
 }

@@ -11,19 +11,47 @@ void printProgramsMenu();
 RealMachine realMachine;
 
 int main() {
+    // realMachine.printRegisters();
+    // realMachine.setWord("ff", 0, new Word("Hello!"));
+    // realMachine.printUserMemory("ff");
+
+    // cout << "\n";
+    // realMachine.setSupervisorWord("100", new Word("World!"));
+    // realMachine.printSupervisorMemory("100");
+    // cout << "\n";
+
+    // VirtualMachine vm;
+    // vm.printRegisters();
+    // vm.setWord("ff", 0, new Word("Hello!"));
+    // vm.printUserMemory("ff");
+    
+    // VM test
+    // bool SF[6] = {0,0,0,0,0,0};
+    // unsigned SP = 0;
+    // unsigned PC = 0;
+    // UserMemory userMemory;
+
+
+    // VirtualMachine vm = VirtualMachine(SF, SP, PC, userMemory);
+    // SP = 42;
+    // PC = 84;
+    // SF[0] = 1;
+    // userMemory.setWord(0, 0, new Word("Hello!"));
+    // vm.printRegisters();
+    // vm.setWord(0, 1, new Word("World!"));
+    // vm.printMemoryBlock(0);
+
+    // RM test
+    realMachine.setSP(42);
+    realMachine.setPC(84);
+    realMachine.setSI(1);
+    realMachine.setPI(1);
+    realMachine.setSF(2, 1);
     realMachine.printRegisters();
-    realMachine.setWord("ff", 0, new Word("Hello!"));
-    realMachine.printUserMemory("ff");
-
-    cout << "\n";
-    realMachine.setSupervisorWord("100", new Word("World!"));
-    realMachine.printSupervisorMemory("100");
-    cout << "-------------------\n";
-
-    VirtualMachine vm;
-    vm.printRegisters();
-    vm.setWord("ff", 0, new Word("Hello!"));
-    vm.printUserMemory("ff");
+    realMachine.setWord(0, 0, new Word("Hello!"));
+    realMachine.printMemoryBlock(0);
+    realMachine.setWord(511, 1, new Word("World!"));
+    realMachine.printMemoryBlock(511);
 
     return 0;
 }

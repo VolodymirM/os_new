@@ -30,19 +30,4 @@ public:
     std::string getWordAsHex();
 };
 
-class Block {
-private:
-    std::unordered_map<size_t, Word*> cells;
-
-public:
-    Block(int index);
-    Word& getWord(size_t index);
-
-};
-
-struct Pointer {
-    Word block;
-    size_t wordIndex;
-};
-
 #endif

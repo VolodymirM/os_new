@@ -13,6 +13,7 @@ public:
     void printBlock(const int index);
     Word& getWord(const int index, size_t wordIndex);
     void setWord(const int index, size_t wordIndex, Word* word);
+    void setWord(const int index, size_t wordIndex, const char* word);
 };
 
 class SupervisorMemory {

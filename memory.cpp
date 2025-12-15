@@ -31,7 +31,45 @@ Word& UserMemory::getWord(const int index, size_t wordIndex) {
 void UserMemory::setWord(const int index, size_t wordIndex, Word* word) {
     if (index < 0 || index >= USER_MEMORY_SIZE || wordIndex >= BLOCK_SIZE)
         throw std::out_of_range("Invalid index in UserMemory::setWord");
+    
+    if (!word) {
+        std::cerr << "Error: Null word pointer provided.\n";
+        return;
+    }
+
     words[index][wordIndex] = *word;
+    delete word;
+}
+
+void UserMemory::setWord(const int index, size_t wordIndex, const char* word) {
+    if (index < 0 || index >= USER_MEMORY_SIZE || wordIndex >= BLOCK_SIZE) {
+        throw std::out_of_range("Invalid index in UserMemory::setWord");
+    }
+
+    if (!word) {
+        std::cerr << "Error: Null word provided.\n";
+        return;
+    }
+
+    unsigned wordSize = strlen(word);
+    if (wordSize <= WORD_LENGTH)
+        setWord(index, wordIndex, new Word(word));
+    else {
+        char extractedWord[WORD_LENGTH + 1] = {0};
+        strncpy(extractedWord, word, WORD_LENGTH);
+        setWord(index, wordIndex, new Word(extractedWord));
+        size_t remainingSize = wordSize - WORD_LENGTH;
+        char* remainingWord = new char[remainingSize + 1];
+        strncpy(remainingWord, word + WORD_LENGTH, remainingSize);
+        remainingWord[remainingSize] = '\0';
+        if (wordIndex + 1 < BLOCK_SIZE)
+            setWord(index, wordIndex + 1, remainingWord);
+        else if (index + 1 < USER_MEMORY_SIZE)
+            setWord(index + 1, 0, remainingWord);
+        else
+            std::cerr << "Error: Cannot fit word, out of memory space.\n";
+        delete[] remainingWord;
+    }
 }
 
 SupervisorMemory::SupervisorMemory() {
@@ -65,7 +103,14 @@ Word& SupervisorMemory::getWord(const int index, size_t wordIndex) {
 void SupervisorMemory::setWord(const int index, size_t wordIndex, Word* word) {
     if (index < 256 || index >= SUPERVISOR_MEMORY_SIZE + 256 || wordIndex >= BLOCK_SIZE)
         throw std::out_of_range("Invalid index in SupervisorMemory::setWord");
+    
+    if (!word) {
+        std::cerr << "Error: Null word pointer provided.\n";
+        return;
+    }
+    
     words[index - 256][wordIndex] = *word;
+    delete word;
 }
 
 Memory::Memory() : userMemory(), supervisorMemory() {}

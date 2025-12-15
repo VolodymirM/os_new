@@ -84,9 +84,18 @@ void openFile(const std::string &programPath, const bool isStepByStep) { // TODO
 
         if (isData) {
             cd.biggerCount();
+            if (cd.getCount() > BLOCK_SIZE) {
+                cd.biggerDB();
+                cd.resetCount();
+            }
+            if (const_cast<Word&>(cd.getDB()).getWordAsNumber() > DATA_SEGMENT_END) {
+                std::cout << "Data segment overflow." << std::endl;
+                break;
+            }
+            if (isStepByStep)
+                realMachine.printRegisters();
             dataCommandDetector(isStepByStep, line, vm);
             if (isStepByStep) {
-                realMachine.printRegisters();
                 system("pause");
                 system("cls");
             }
@@ -95,9 +104,18 @@ void openFile(const std::string &programPath, const bool isStepByStep) { // TODO
 
         if (isCode) {
             cd.biggerCount();
+            if (cd.getCount() > BLOCK_SIZE) {
+                cd.biggerDB();
+                cd.resetCount();
+            }
+            if (const_cast<Word&>(cd.getDB()).getWordAsNumber() > CODE_SEGMENT_END) {
+                std::cout << "Code segment overflow." << std::endl;
+                break;
+            }
+            if (isStepByStep)
+                realMachine.printRegisters();
             codeCommandDetector(isStepByStep, line, vm);
             if (isStepByStep) {
-                realMachine.printRegisters();
                 system("pause");
                 system("cls");
             }
@@ -125,24 +143,37 @@ void dataCommandDetector(const bool isStepByStep, const std::string& commandLine
     std::string line = commandLine;
     line.erase(0, line.find_first_not_of(" \t\n\r\f\v"));
     line.erase(line.find_last_not_of(" \t\n\r\f\v") + 1);
-    
-    // Find the last symbol (e.g., '$') and remove everything after it
-    // size_t lastSymbolPos = line.find_last_of('$');
-    // if (lastSymbolPos != std::string::npos) {
-    //     line = line.substr(0, lastSymbolPos + 1);
-    // }std::cout << line << std::endl;
-    // TODO: Process the data command
+
     if (line == "DW") {
-        // TODO: implement
+        DW(isStepByStep);
     } else if (line == "DB") {
-        // TODO: implement
+        DB(isStepByStep);
     } else {
-        
+        if (line.find("DW ") != std::string::npos) {
+            std::string value = line.substr(3);
+            DW(isStepByStep, value);
+        } else if (line.find("DB ") != std::string::npos) {
+            std::string value = line.substr(3);
+            DB(isStepByStep, value);
+        }
     }
 }
 
 void codeCommandDetector(const bool isStepByStep, const std::string& commandLine, VirtualMachine& vm) {
-    // TODO: implement
+    std::string line = commandLine;
+    line.erase(0, line.find_first_not_of(" \t\n\r\f\v"));
+    line.erase(line.find_last_not_of(" \t\n\r\f\v") + 1);
+    if (line.empty())
+        return;
+    
+    if (line.size() <= 6) {
+        realMachine.setWord(const_cast<Word&>(realMachine.getChannelDevice().getDB()).getWordAsNumber(), realMachine.getChannelDevice().getCount() - 1, line.c_str());
+        if (isStepByStep)
+            realMachine.printMemoryBlock(const_cast<Word&>(realMachine.getChannelDevice().getDB()).getWordAsNumber());
+    }
+
+    else
+        std::cout << "Code command error: command too long." << std::endl;
 }
 
 void executeProgram(VirtualMachine& vm, const bool isStepByStep) {

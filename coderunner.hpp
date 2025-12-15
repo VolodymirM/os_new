@@ -5,6 +5,7 @@
 #include "utils.hpp"
 #include "real.hpp"
 #include "virtual.hpp"
+#include "commands.hpp"
 
 extern RealMachine realMachine;
 

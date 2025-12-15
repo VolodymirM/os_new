@@ -2,8 +2,10 @@
 "HELLO WORLD!"
 ..data
 DB "Hello!$"
+DB "World!$"
 
 ..code
 PR0000
+PR0001
 SUSPND
 ======

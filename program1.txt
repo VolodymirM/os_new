@@ -1,6 +1,9 @@
-.data
+******
+"HELLO WORLD!"
+..data
 DB "Hello!$"
 
-.code
+..code
 PR0000
-HALT
+SUSPND
+======

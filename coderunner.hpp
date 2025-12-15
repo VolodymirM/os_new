@@ -8,7 +8,10 @@
 
 extern RealMachine realMachine;
 
-void runProgram(const std::string& programPath);
-void runProgramStepByStep(const std::string& programPath);
+void openFile(const std::string &programPath, const bool isStepByStep);
+void runProgram(const std::string& programPath, const bool isStepByStep);
+void executeProgram(VirtualMachine& vm, const bool isStepByStep);
+void dataCommandDetector(const bool isStepByStep, const std::string& commandLine, VirtualMachine& vm);
+void codeCommandDetector(const bool isStepByStep, const std::string& commandLine, VirtualMachine& vm);
 
 #endif

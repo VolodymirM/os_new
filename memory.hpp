@@ -39,7 +39,7 @@ public:
     Word& getWord(const int index, size_t wordIndex);
     void setWord(const int index, size_t wordIndex, Word* word);
     void printBlock(const int index);
-    UserMemory* getUserMemoryAddress();
+    UserMemory& getUserMemoryAddress();
     
 };
 

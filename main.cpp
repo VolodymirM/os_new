@@ -2,6 +2,7 @@
 #include "real.hpp"
 #include "virtual.hpp"
 #include "utils.hpp"
+#include "coderunner.hpp"
 
 using namespace std;
 
@@ -42,15 +43,17 @@ int main() {
     // vm.printMemoryBlock(0);
 
     // RM test
-    realMachine.setSP(42);
-    realMachine.setPC(84);
-    realMachine.setSI(1);
-    realMachine.setPI(1);
-    realMachine.setSF(2, 1);
-    realMachine.printRegisters();
-    realMachine.setWord(0, 254, "Hello world! Hello world");
-    realMachine.printMemoryBlock(0);
-    realMachine.printMemoryBlock(1);
+    // realMachine.setSP(42);
+    // realMachine.setPC(84);
+    // realMachine.setSI(1);
+    // realMachine.setPI(1);
+    // realMachine.setSF(2, 1);
+    // realMachine.printRegisters();
+    // realMachine.setWord(0, 254, "Hello world! Hello world");
+    // realMachine.printMemoryBlock(0);
+    // realMachine.printMemoryBlock(1);
+
+    openFile("program1.txt", true);
 
     return 0;
 }

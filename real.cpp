@@ -1,7 +1,13 @@
 #include "real.hpp"
 
-void ChannelDevice::makeOperation() {
-    // TODO: implement channel device operations
+void ChannelDevice::printChannelRegisters() {
+    std::cout << "Channel Device Registers:\n";
+    std::cout << "SB: " << SB.getWordAsHex();
+    std::cout << " DB: " << DB.getWordAsHex();
+    std::cout << " ST: " << ST;
+    std::cout << " DT: " << DT;
+    std::cout << " Offset: " << offset;
+    std::cout << " Count: " << count << "\n";
 }
 
 RealMachine::RealMachine()
@@ -10,6 +16,10 @@ RealMachine::RealMachine()
     initRegisters();
     createSwappingFile();
     this->memory = Memory();
+}
+
+void RealMachine::makeOperation() {
+    // TODO: implement
 }
 
 void RealMachine::initRegisters() {
@@ -46,6 +56,7 @@ void RealMachine::createSwappingFile() {
 }
 
 void RealMachine::printRegisters() {
+    std::cout << "CPU Registers:\n";
     std::cout << "SP: " << SP;
     std::cout << " PC: " << PC;
     std::cout << " SF: ";
@@ -56,6 +67,7 @@ void RealMachine::printRegisters() {
     std::cout << " PI: " << PI;
     std::cout << " SI: " << SI;
     std::cout << " TI: " << TI << "\n";
+    channelsDevice.printChannelRegisters();
 }
 
 void RealMachine::setWord(const size_t blockIndex, const size_t wordIndex, const char* word) {

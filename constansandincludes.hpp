@@ -17,4 +17,11 @@
 #define SWAP_FILE "swap.txt"
 #define SWAP_BLOCKS 256
 
+#define DATA_SEGMENT_START 0
+#define DATA_SEGMENT_END 4
+#define CODE_SEGMENT_START 5
+#define CODE_SEGMENT_END 9
+#define STACK_SEGMENT_START 10
+#define STACK_SEGMENT_END 19
+
 #endif

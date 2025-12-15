@@ -28,14 +28,27 @@ private:
     unsigned count;
 
 public:
-    ChannelDevice(RealMachine* machine) : RealComponent(machine) {};
+    ChannelDevice(RealMachine* machine) : RealComponent(machine), SB(), DB(), ST(0), DT(0), offset(0), count(0) {};
     void setSB(const Word& sb) { SB = sb; }
+    void biggerSB() {Word w = SB; int64_t num = w.getWordAsNumber(); num++; SB.setNumberAsWord(num); }
     void setDB(const Word& db) { DB = db; }
+    void biggerDB() {Word w = DB; int64_t num = w.getWordAsNumber(); num++; DB.setNumberAsWord(num); }
     void setST(unsigned st) { ST = st; }
+    void biggerST() { ST++; }
     void setDT(unsigned dt) { DT = dt; }
+    void biggerDT() { DT++; }
     void setOffset(size_t off) { offset = off; }
+    void biggerOffset() { offset++; }
     void setCount(unsigned cnt) { count = cnt; }
-    void makeOperation();
+    void biggerCount() { count++; }
+    void resetCount() { count = 0; }
+    const Word& getSB() const { return SB; }
+    const Word& getDB() const { return DB; }
+    unsigned getST() const { return ST; }
+    unsigned getDT() const { return DT; }
+    size_t getOffset() const { return offset; }
+    unsigned getCount() const { return count; }
+    void printChannelRegisters();
 
 };
 
@@ -90,6 +103,11 @@ public: // TODO: print channel device registers
     void setWord(const size_t blockIndex, const size_t wordIndex, const char* word);
     void setWord(const size_t absoluteIndex, const size_t wordIndex, int64_t number);
     void printMemoryBlock(const size_t block) { memory.printBlock(block); }
+    bool* getSFArray() { return SF; }
+    unsigned& getSPRef() { return SP; }
+    unsigned& getPCRef() { return PC; }
+    UserMemory& getUserMemoryRef() { return memory.getUserMemoryAddress(); }
+    ChannelDevice& getChannelDevice() { return channelsDevice; }
 
 };
 

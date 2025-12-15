@@ -144,4 +144,4 @@ void Memory::printBlock(const int index) {
 
 void Memory::printUserBlock(const int index) { userMemory.printBlock(index); }
 void Memory::printSupervisorBlock(const int index) { supervisorMemory.printBlock(index); }
-UserMemory* Memory::getUserMemoryAddress() { return &userMemory; }
+UserMemory& Memory::getUserMemoryAddress() { return userMemory; }

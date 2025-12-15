@@ -48,10 +48,9 @@ int main() {
     realMachine.setPI(1);
     realMachine.setSF(2, 1);
     realMachine.printRegisters();
-    realMachine.setWord(0, 0, new Word("Hello!"));
+    realMachine.setWord(0, 254, "Hello world! Hello world");
     realMachine.printMemoryBlock(0);
-    realMachine.setWord(511, 1, new Word("World!"));
-    realMachine.printMemoryBlock(511);
+    realMachine.printMemoryBlock(1);
 
     return 0;
 }

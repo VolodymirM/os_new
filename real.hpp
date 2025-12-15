@@ -47,7 +47,7 @@ public:
 
 };
 
-class RealMachine { // TODO: CPU struct
+class RealMachine {
 private:
     // Registers
     bool SF[6]; // 6 flags
@@ -87,7 +87,8 @@ public: // TODO: print channel device registers
     bool getTI() const { return TI; }
     void setSF(size_t index, bool value) { SF[index] = value; }
     bool getSF(size_t index) const { return SF[index]; }
-    void setWord(const size_t blockIndex, const size_t wordIndex, Word* word) { memory.setWord(blockIndex, wordIndex, word); }
+    void setWord(const size_t blockIndex, const size_t wordIndex, const char* word);
+    void setWord(const size_t absoluteIndex, const size_t wordIndex, int64_t number);
     void printMemoryBlock(const size_t block) { memory.printBlock(block); }
 
 };

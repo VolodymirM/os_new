@@ -57,3 +57,42 @@ void RealMachine::printRegisters() {
     std::cout << " SI: " << SI;
     std::cout << " TI: " << TI << "\n";
 }
+
+void RealMachine::setWord(const size_t blockIndex, const size_t wordIndex, const char* word) {
+    if (!word) {
+        std::cerr << "Error: Null word provided.\n";
+        return;
+    }
+
+    if (blockIndex >= USER_MEMORY_SIZE + SUPERVISOR_MEMORY_SIZE || wordIndex >= BLOCK_SIZE) {
+        std::cerr << "Error: Memory index out of bounds.\n";
+        return;
+    }
+
+    unsigned wordSize = strlen(word);
+    if (wordSize <= WORD_LENGTH)
+        memory.setWord(blockIndex, wordIndex, new Word(word));
+    else {
+        char extractedWord[WORD_LENGTH + 1] = {0};
+        strncpy(extractedWord, word, WORD_LENGTH);
+        memory.setWord(blockIndex, wordIndex, new Word(extractedWord));
+        size_t remainingSize = wordSize - WORD_LENGTH;
+        char* remainingWord = new char[remainingSize + 1];
+        strncpy(remainingWord, word + WORD_LENGTH, remainingSize);
+        remainingWord[remainingSize] = '\0';
+        if (wordIndex + 1 < BLOCK_SIZE)
+            setWord(blockIndex, wordIndex + 1, remainingWord);
+        else
+            setWord(blockIndex + 1, 0, remainingWord);
+        delete[] remainingWord;
+    }
+}
+
+void RealMachine::setWord(const size_t absoluteIndex, const size_t wordIndex, int64_t number) {
+    if (absoluteIndex >= USER_MEMORY_SIZE + SUPERVISOR_MEMORY_SIZE || wordIndex >= BLOCK_SIZE) {
+        std::cerr << "Error: Memory index out of bounds.\n";
+        return;
+    }
+
+    memory.setWord(absoluteIndex, wordIndex, new Word(number));
+}
